@@ -17,6 +17,6 @@ export const tesDatabaseConnection = async () => {
     console.log("Database connected successfully");
     connectDB.release();
   } catch (err) {
-    throw new Error(`Failed to connect database !: ${err}`);
+    throw new Error(`Failed to connect database ! : ${err.message}`);
   }
 };
