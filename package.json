@@ -1,0 +1,20 @@
+{
+  "name": "crud-inventori",
+  "version": "1.0.0",
+  "description": "learning crud",
+  "license": "ISC",
+  "author": "Rifaldi",
+  "type": "module",
+  "main": "app.js",
+  "scripts": {
+    "start": "nodemon app.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "devDependencies": {
+    "nodemon": "^3.1.14"
+  },
+  "dependencies": {
+    "dotenv": "^17.4.2",
+    "pg": "^8.22.0"
+  }
+}
