@@ -11,11 +11,25 @@ async function startServer() {
     await tesDatabaseConnection();
     const server = http.createServer((req, res) => {
       const url = req.url;
-      if (url === "/api/categories") {
+      const segmentsUrl = url.split("/");
+      const routesCategories =
+        segmentsUrl[1] === "api" && segmentsUrl[2] === "categories";
+
+      const routesProductsStock =
+        segmentsUrl[1] === "api" &&
+        segmentsUrl[2] === "products" &&
+        segmentsUrl.includes("stock");
+
+      const routesProducts =
+        segmentsUrl[1] === "api" &&
+        segmentsUrl[2] === "products" &&
+        !segmentsUrl.includes("stock");
+
+      if (routesCategories) {
         handleRoutesCategories(req, res);
-      } else if (url === "/api/products/stock") {
+      } else if (routesProductsStock) {
         handleStokProductRoutes(req, res);
-      } else if (url === "/api/products") {
+      } else if (routesProducts) {
         handleProductsRoutes(req, res);
       } else {
         res.writeHead(404, { "Content-Type": "application/json" });
