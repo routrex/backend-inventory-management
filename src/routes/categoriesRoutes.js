@@ -1,3 +1,5 @@
+import { createCategories } from "../controllers/categoriesControllers.js";
+
 const handleRoutesCategories = (req, res) => {
   const url = req.url;
   const segmentsUrl = url.split("/");
@@ -15,8 +17,7 @@ const handleRoutesCategories = (req, res) => {
   switch (method) {
     case "POST":
       if (mainRoutes) {
-        res.writeHead(201, { "Content-Type": "application/json" });
-        res.end(JSON.stringify({ message: "Success create categories!" }));
+        createCategories(req, res);
         return;
       }
       break;

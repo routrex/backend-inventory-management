@@ -1,3 +1,5 @@
+import createProducts from "../controllers/productsServices.js";
+
 const handleProductsRoutes = (req, res) => {
   const url = req.url;
   const segmentsUrl = url.split("/");
@@ -15,8 +17,7 @@ const handleProductsRoutes = (req, res) => {
   switch (method) {
     case "POST":
       if (mainRoutes) {
-        res.writeHead(201, { "Content-Type": "application/json" });
-        res.end(JSON.stringify({ message: "Success create products!" }));
+        createProducts(req, res)
         return;
       }
       break;
