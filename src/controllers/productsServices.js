@@ -1,5 +1,41 @@
-import { createProductsServices } from "../services/productsServices.js";
+import {
+  createProductsServices,
+  getAllProductsServices,
+  getProductByIdServices,
+} from "../services/productsServices.js";
 import createProductsValidations from "../validations/productsValidations.js";
+
+export const getProductById = async (req, res, id) => {
+  try {
+    const findProductId = await getProductByIdServices(id);
+    res.writeHead(200, { "Content-Type": "application/json" });
+    res.end(
+      JSON.stringify({
+        message: `Success Get product id ${id}!`,
+        data: findProductId,
+      }),
+    );
+  } catch (err) {
+    res.writeHead(404, { "Content-Type": "application/json" });
+    res.end(JSON.stringify({ message: err.message }));
+  }
+};
+
+export const getAllProducts = async (req, res) => {
+  try {
+    const products = await getAllProductsServices();
+    res.writeHead(200, { "Content-Type": "application/json" });
+    res.end(
+      JSON.stringify({
+        message: "Success Get All Products!",
+        data: products,
+      }),
+    );
+  } catch (err) {
+    res.writeHead(404, { "Content-Type": "application/json" });
+    res.end(JSON.stringify({ message: "Products Not Found" }));
+  }
+};
 
 export const createProducts = (req, res) => {
   let data = [];

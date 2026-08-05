@@ -1,4 +1,10 @@
-import { createCategories } from "../controllers/categoriesControllers.js";
+import {
+  createCategories,
+  deleteCategoryById,
+  getAllCategory,
+  getCategoryById,
+  updateCategoryById,
+} from "../controllers/categoriesControllers.js";
 
 const handleRoutesCategories = (req, res) => {
   const url = req.url;
@@ -23,34 +29,28 @@ const handleRoutesCategories = (req, res) => {
       break;
     case "GET":
       if (mainRoutes) {
-        res.writeHead(200, { "Content-Type": "application/json" });
-        res.end(JSON.stringify({ message: "Success Get All categories!" }));
+        getAllCategory(req, res);
         return;
       }
 
       if (routesId) {
-        res.writeHead(200, { "Content-Type": "application/json" });
-        res.end(
-          JSON.stringify({ message: `Success Get categories id ${id}!` }),
-        );
+        getCategoryById(req, res, id);
         return;
       }
       break;
     case "PATCH":
       if (routesId) {
-        res.writeHead(200, { "Content-Type": "application/json" });
-        res.end(
-          JSON.stringify({ message: `Success update categories id ${id}!` }),
-        );
+        updateCategoryById(req, res, id);
         return;
       }
       break;
     case "DELETE":
       if (routesId) {
-        res.writeHead(200, { "Content-Type": "application/json" });
-        res.end(
-          JSON.stringify({ message: `Success delete categories id ${id}!` }),
-        );
+        deleteCategoryById(req, res, id)
+        // res.writeHead(200, { "Content-Type": "application/json" });
+        // res.end(
+        //   JSON.stringify({ message: `Success delete categories id ${id}!` }),
+        // );
         return;
       }
       break;

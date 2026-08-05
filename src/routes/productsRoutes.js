@@ -1,4 +1,7 @@
-import createProducts from "../controllers/productsServices.js";
+import createProducts, {
+  getAllProducts,
+  getProductById,
+} from "../controllers/productsServices.js";
 
 const handleProductsRoutes = (req, res) => {
   const url = req.url;
@@ -17,29 +20,29 @@ const handleProductsRoutes = (req, res) => {
   switch (method) {
     case "POST":
       if (mainRoutes) {
-        createProducts(req, res)
+        createProducts(req, res);
         return;
       }
       break;
     case "GET":
       if (mainRoutes) {
-        res.writeHead(200, { "Content-Type": "application/json" });
-        res.end(JSON.stringify({ message: "Success Get All products!" }));
+        getAllProducts(req, res);
         return;
       }
 
       if (routesId) {
-        res.writeHead(200, { "Content-Type": "application/json" });
-        res.end(JSON.stringify({ message: `Success Get products id ${id}` }));
+        getProductById(req, res, id);
         return;
       }
       break;
     case "PATCH":
       if (routesId) {
-        res.writeHead(200, { "Content-Type": "application/json" });
-        res.end(
-          JSON.stringify({ message: `Success update products id ${id}` }),
-        );
+
+        
+        // res.writeHead(200, { "Content-Type": "application/json" });
+        // res.end(
+        //   JSON.stringify({ message: `Success update products id ${id}` }),
+        // );
         return;
       }
       break;
