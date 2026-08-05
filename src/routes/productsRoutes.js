@@ -1,6 +1,9 @@
-import createProducts, {
+import  {
+  createProducts,
+  deleteProductById,
   getAllProducts,
   getProductById,
+  updateProductById,
 } from "../controllers/productsServices.js";
 
 const handleProductsRoutes = (req, res) => {
@@ -37,21 +40,18 @@ const handleProductsRoutes = (req, res) => {
       break;
     case "PATCH":
       if (routesId) {
-
-        
-        // res.writeHead(200, { "Content-Type": "application/json" });
-        // res.end(
-        //   JSON.stringify({ message: `Success update products id ${id}` }),
-        // );
+        updateProductById(req, res, id);
         return;
       }
       break;
     case "DELETE":
       if (routesId) {
-        res.writeHead(200, { "Content-Type": "application/json" });
-        res.end(
-          JSON.stringify({ message: `Success delete products id ${id}` }),
-        );
+
+        deleteProductById(req, res, id)
+        // res.writeHead(200, { "Content-Type": "application/json" });
+        // res.end(
+        //   JSON.stringify({ message: `Success delete products id ${id}` }),
+        // );
         return;
       }
       break;

@@ -1,9 +1,14 @@
 import {
   createProductsServices,
+  deleteProductByIdServices,
   getAllProductsServices,
   getProductByIdServices,
+  updateProductByIdService,
 } from "../services/productsServices.js";
-import createProductsValidations from "../validations/productsValidations.js";
+import {
+  createProductsValidations,
+  updatedProductsValidations,
+} from "../validations/productsValidations.js";
 
 export const getProductById = async (req, res, id) => {
   try {
@@ -76,4 +81,52 @@ export const createProducts = (req, res) => {
   });
 };
 
-export default createProducts;
+export const updateProductById = (req, res, id) => {
+  let data = [];
+
+  req.on("data", (category) => {
+    data.push(category);
+  });
+
+  req.on("end", async () => {
+    const requestBody = Buffer.concat(data).toString();
+
+    try {
+      const parseData = JSON.parse(requestBody);
+      const validationUpdateProducts = updatedProductsValidations(parseData);
+
+      if (validationUpdateProducts) {
+        res.writeHead(400, { "Content-Type": "application/json" });
+        res.end(JSON.stringify({ message: validationUpdateProducts.message }));
+        return;
+      }
+
+      const updateData = await updateProductByIdService(parseData, id);
+      res.writeHead(200, { "Content-Type": "application/json" });
+      res.end(
+        JSON.stringify({
+          message: `Success update product id ${id}`,
+          data: updateData,
+        }),
+      );
+    } catch (err) {
+      res.writeHead(400, { "Content-Type": "application/json" });
+      res.end(JSON.stringify({ message: err.message }));
+    }
+  });
+};
+
+export const deleteProductById = async (req, res, id) => {
+  try {
+      await deleteProductByIdServices(id);
+      res.writeHead(200, { "Content-Type": "application/json" });
+      res.end(
+        JSON.stringify({
+          message: `Success delete product id ${id}!`,
+        }),
+      );
+    } catch (err) {
+      res.writeHead(404, { "Content-Type": "application/json" });
+      res.end(JSON.stringify({ message: err.message }));
+    }
+}

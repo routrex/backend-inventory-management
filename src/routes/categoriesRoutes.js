@@ -47,10 +47,6 @@ const handleRoutesCategories = (req, res) => {
     case "DELETE":
       if (routesId) {
         deleteCategoryById(req, res, id)
-        // res.writeHead(200, { "Content-Type": "application/json" });
-        // res.end(
-        //   JSON.stringify({ message: `Success delete categories id ${id}!` }),
-        // );
         return;
       }
       break;

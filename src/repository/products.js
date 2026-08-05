@@ -80,3 +80,27 @@ export const insertProducts = async (product) => {
     throw err;
   }
 };
+
+export const updateProductById = async (updateCategory, id) => {
+  const { nama_produk, deskripsi, harga } = updateCategory;
+  try {
+    const query =
+      "UPDATE produk SET nama_produk = $1, deskripsi = $2, harga = $3, updated_at = NOW() where id = $4 RETURNING *";
+    const values = [nama_produk, deskripsi, harga, id];
+    const result = await connectPostgreSql.query(query, values);
+    return result.rows[0];
+  } catch (err) {
+    throw err;
+  }
+};
+
+export const deleteProductById = async (id) => {
+  try {
+    const query = "DELETE FROM produk where id = $1 RETURNING *";
+    const values = [id];
+    const result = await connectPostgreSql.query(query, values);
+    return result.rows[0];
+  } catch (err) {
+    throw err;
+  }
+};

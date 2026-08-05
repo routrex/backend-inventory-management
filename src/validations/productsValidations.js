@@ -1,4 +1,4 @@
-const createProductsValidations = (data) => {
+export const createProductsValidations = (data) => {
   const { nama_produk, deskripsi, harga, kategori_id } = data;
 
   if (!nama_produk || nama_produk.trim() === "") {
@@ -21,20 +21,6 @@ const createProductsValidations = (data) => {
     return new Error("Price cannot be negative!");
   }
 
-  // if (!stok || stok.trim() === "") {
-  //   return new Error("Stock is required!");
-  // }
-
-  // if (!stok || stok === "") {
-  //   if (isNaN(Number(stok))) {
-  //     return new Error("Stock must be a valid number!");
-  //   }
-
-  //   if (Number(stok) < 0) {
-  //     return new Error("Stock cannot be negative!");
-  //   }
-  // }
-
   if (!kategori_id || kategori_id === null) {
     return new Error("Category Id is required!");
   }
@@ -44,4 +30,14 @@ const createProductsValidations = (data) => {
   }
 };
 
-export default createProductsValidations;
+export const updatedProductsValidations = (data) => {
+  const { harga } = data;
+
+  if (isNaN(Number(harga))) {
+    return new Error("Price must be a valid number!");
+  }
+
+  if (Number(harga) < 0) {
+    return new Error("Price cannot be negative!");
+  }
+};
