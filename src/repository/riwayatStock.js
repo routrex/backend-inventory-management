@@ -18,8 +18,6 @@ export const getStockHistoryByIdProduct = async (id) => {
   }
 };
 
-// complete inventory management REST API
-
 export const createStockHistory = async (stokData, client) => {
   const { produk_id, type, quantity } = stokData;
 
