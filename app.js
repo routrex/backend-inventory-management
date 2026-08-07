@@ -2,7 +2,7 @@ import http from "http";
 import { tesDatabaseConnection } from "./src/config/dbConfig.js";
 import handleRoutesCategories from "./src/routes/categoriesRoutes.js";
 import handleProductsRoutes from "./src/routes/productsRoutes.js";
-import handleStokProductRoutes from "./src/routes/stockProductsRoutes.js";
+import stockRoutes from "./src/routes/riwayatStockRoutes.js";
 
 const port = process.env.PORT;
 
@@ -12,24 +12,24 @@ async function startServer() {
     const server = http.createServer((req, res) => {
       const url = req.url;
       const segmentsUrl = url.split("/");
-      const routesCategories =
+      const isCategoriesRoute =
         segmentsUrl[1] === "api" && segmentsUrl[2] === "categories";
 
-      const routesProductsStock =
+      const isProductStockRoute =
         segmentsUrl[1] === "api" &&
         segmentsUrl[2] === "products" &&
         segmentsUrl.includes("stock");
 
-      const routesProducts =
+      const isProductRoute =
         segmentsUrl[1] === "api" &&
         segmentsUrl[2] === "products" &&
         !segmentsUrl.includes("stock");
 
-      if (routesCategories) {
+      if (isCategoriesRoute) {
         handleRoutesCategories(req, res);
-      } else if (routesProductsStock) {
-        handleStokProductRoutes(req, res);
-      } else if (routesProducts) {
+      } else if (isProductStockRoute) {
+        stockRoutes(req, res);
+      } else if (isProductRoute) {
         handleProductsRoutes(req, res);
       } else {
         res.writeHead(404, { "Content-Type": "application/json" });

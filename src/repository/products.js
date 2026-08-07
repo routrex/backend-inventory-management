@@ -1,11 +1,11 @@
 import { connectPostgreSql } from "../config/dbConfig.js";
 
-export const findProductById = async (id) => {
+export const findProductById = async (id, db = connectPostgreSql) => {
   try {
     const query =
-      "SELECT id, nama_produk, deskripsi, harga, kategori_id, created_at, updated_at FROM produk where id = $1";
+      "SELECT id, nama_produk, deskripsi, harga, stok, kategori_id, created_at, updated_at FROM produk where id = $1";
     const values = [id];
-    const result = await connectPostgreSql.query(query, values);
+    const result = await db.query(query, values);
     if (result.rows.length > 0) {
       return result.rows[0];
     } else {
@@ -19,7 +19,7 @@ export const findProductById = async (id) => {
 export const getAllProducts = async () => {
   try {
     const query =
-      "SELECT id, nama_produk, deskripsi, harga, kategori_id, created_at, updated_at FROM produk";
+      "SELECT id, nama_produk, deskripsi, harga, stok, kategori_id, created_at, updated_at FROM produk ORDER BY harga ASC";
 
     const result = await connectPostgreSql.query(query);
 
@@ -88,6 +88,18 @@ export const updateProductById = async (updateCategory, id) => {
       "UPDATE produk SET nama_produk = $1, deskripsi = $2, harga = $3, updated_at = NOW() where id = $4 RETURNING *";
     const values = [nama_produk, deskripsi, harga, id];
     const result = await connectPostgreSql.query(query, values);
+    return result.rows[0];
+  } catch (err) {
+    throw err;
+  }
+};
+
+export const updateStokProduct = async (id, updateStok, client) => {
+  try {
+    const query =
+      "UPDATE produk SET stok = $1,  updated_at = NOW() where id = $2 RETURNING *";
+    const values = [updateStok, id];
+    const result = await client.query(query, values);
     return result.rows[0];
   } catch (err) {
     throw err;

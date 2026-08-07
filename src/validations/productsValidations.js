@@ -21,7 +21,7 @@ export const createProductsValidations = (data) => {
     return new Error("Price cannot be negative!");
   }
 
-  if (!kategori_id || kategori_id === null) {
+  if (!kategori_id) {
     return new Error("Category Id is required!");
   }
 

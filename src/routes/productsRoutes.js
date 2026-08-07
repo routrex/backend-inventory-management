@@ -1,10 +1,10 @@
-import  {
+import {
   createProducts,
   deleteProductById,
   getAllProducts,
   getProductById,
   updateProductById,
-} from "../controllers/productsServices.js";
+} from "../controllers/productsControllers.js";
 
 const handleProductsRoutes = (req, res) => {
   const url = req.url;
@@ -13,7 +13,7 @@ const handleProductsRoutes = (req, res) => {
     segmentsUrl.length === 3 &&
     segmentsUrl[1] === "api" &&
     segmentsUrl[2] === "products";
-  const routesId =
+  const isProductsIdRoute =
     segmentsUrl.length === 4 &&
     segmentsUrl[1] === "api" &&
     segmentsUrl[2] === "products";
@@ -33,25 +33,20 @@ const handleProductsRoutes = (req, res) => {
         return;
       }
 
-      if (routesId) {
+      if (isProductsIdRoute) {
         getProductById(req, res, id);
         return;
       }
       break;
     case "PATCH":
-      if (routesId) {
+      if (isProductsIdRoute) {
         updateProductById(req, res, id);
         return;
       }
       break;
     case "DELETE":
-      if (routesId) {
-
-        deleteProductById(req, res, id)
-        // res.writeHead(200, { "Content-Type": "application/json" });
-        // res.end(
-        //   JSON.stringify({ message: `Success delete products id ${id}` }),
-        // );
+      if (isProductsIdRoute) {
+        deleteProductById(req, res, id);
         return;
       }
       break;

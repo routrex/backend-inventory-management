@@ -13,7 +13,7 @@ const handleRoutesCategories = (req, res) => {
     segmentsUrl.length === 3 &&
     segmentsUrl[1] === "api" &&
     segmentsUrl[2] === "categories";
-  const routesId =
+  const isCategoryIdRoute =
     segmentsUrl.length === 4 &&
     segmentsUrl[1] === "api" &&
     segmentsUrl[2] === "categories";
@@ -33,19 +33,19 @@ const handleRoutesCategories = (req, res) => {
         return;
       }
 
-      if (routesId) {
+      if (isCategoryIdRoute) {
         getCategoryById(req, res, id);
         return;
       }
       break;
     case "PATCH":
-      if (routesId) {
+      if (isCategoryIdRoute) {
         updateCategoryById(req, res, id);
         return;
       }
       break;
     case "DELETE":
-      if (routesId) {
+      if (isCategoryIdRoute) {
         deleteCategoryById(req, res, id)
         return;
       }
