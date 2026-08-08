@@ -19,7 +19,7 @@ export const findProductById = async (id, db = connectPostgreSql) => {
 export const getAllProducts = async () => {
   try {
     const query =
-      "SELECT id, nama_produk, deskripsi, harga, stok, kategori_id, created_at, updated_at FROM produk ORDER BY harga ASC";
+      "SELECT id, nama_produk, deskripsi, harga, created_at, updated_at FROM produk ORDER BY harga ASC";
 
     const result = await connectPostgreSql.query(query);
 
