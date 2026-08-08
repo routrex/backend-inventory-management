@@ -38,7 +38,7 @@ export const createStockInServices = async (data, id) => {
       throw new Error("Product ID does not exist.");
     }
 
-    if (quantity > existingProduct.stok) {
+    if (quantity < existingProduct.stok) {
       throw new Error("The quantity must be greater than the current stock!");
     }
 
